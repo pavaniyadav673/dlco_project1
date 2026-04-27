@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Seven Segment LED Display</title>
+  <style>
+    body {
+      background: #000;
+      color: white;
+      text-align: center;
+      font-family: Arial;
+    }
+    h2 
+    {
+      margin-top: 20px;
+      font-style: italic;
+      font-weight: bold;
+    }
+    .display {
+      position: relative;
+      width: 120px;
+      height: 200px;
+      margin: 40px auto;
+    }
+    .segment {
+      position: absolute;
+      background: #111;
+      border-radius: 10px;
+      transition: all 0.3s ease-in-out;
+    }
+      /* LED ON effect */
+    .on {
+      background: linear-gradient(145deg, #ff4d4d, #990000);
+      box-shadow:
+        0 0 10px #ff1a1a,
+        0 0 20px #ff1a1a,
+        0 0 40px #ff0000,
+        inset 0 0 10px #ff6666;
+      animation: glow 0.4s ease-in-out;
+    }
+    @keyframes glow {
+      0% {
+        opacity: 0.2;
+        transform: scale(0.9);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    /* Segment positions */
+    .a { top: 0; left: 20px; width: 80px; height: 20px; }
+    .b { top: 20px; right: 0; width: 20px; height: 80px; }
+    .c { bottom: 20px; right: 0; width: 20px; height: 80px; }
+    .d { bottom: 0; left: 20px; width: 80px; height: 20px; }
+    .e { bottom: 20px; left: 0; width: 20px; height: 80px; }
+    .f { top: 20px; left: 0; width: 20px; height: 80px; }
+    .g { top: 90px; left: 20px; width: 80px; height: 20px; }
+    input, button 
+    {
+      padding: 10px;
+      margin: 10px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: none;
+    }
+    button 
+    {
+      background: rgb(7, 240, 15);
+      color: white;
+      cursor: pointer;
+    }
+    button:hover 
+    {
+      background: rgb(6, 233, 10);
+    }
+  </style>
+</head>
+
+<body>
+
+  <h2>Seven Segment LED Display</h2>
+
+  <div class="display">
+    <div class="segment a"></div>
+    <div class="segment b"></div>
+    <div class="segment c"></div>
+    <div class="segment d"></div>
+    <div class="segment e"></div>
+    <div class="segment f"></div>
+    <div class="segment g"></div>
+  </div>
+
+  <input type="number" id="num" min="0" max="9" placeholder="Enter 0-9">
+  <button onclick="showDigit()">Show</button>
+
+  <script>
+    const numbers = {
+      0: ['a','b','c','d','e','f'],
+      1: ['b','c'],
+      2: ['a','b','g','e','d'],
+      3: ['a','b','g','c','d'],
+      4: ['f','g','b','c'],
+      5: ['a','f','g','c','d'],
+      6: ['a','f','g','c','d','e'],
+      7: ['a','b','c'],
+      8: ['a','b','c','d','e','f','g'],
+      9: ['a','b','c','d','f','g']
+    };
+    function showDigit() 
+    {
+      const value = document.getElementById("num").value;
+      // Turn OFF all
+      document.querySelectorAll('.segment').forEach(seg => {
+        seg.classList.remove('on');
+      });
+      // Turn ON required segments
+      if (numbers[value]) {
+        numbers[value].forEach(seg => {
+          document.querySelector('.' + seg).classList.add('on');
+        });
+      }
+    }  
+  </script>
+</body>
+</html>
